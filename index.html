@@ -126,7 +126,7 @@ async function loadStoreProducts() {
         const products = data.record.products || [];
 
         if (products.length === 0) {
-            container.innerHTML = `<div class="loading">لا توجد منتجات مضافة حالياً. يجدر بمدير المتجر إضافة منتجات جديدة!</div>`;
+            container.innerHTML = `<div class="loading">لا توجد منتجات مضافة حالياً. يرجى إضافتها عبر لوحة الإدارة!</div>`;
             return;
         }
 
