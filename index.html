@@ -3,119 +3,159 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>متجر العائلة المميز</title>
+<title>Maha Zone | متجر العصر الرقمي</title>
 <style>
 :root {
-    --bg-color: #f8fafc;
-    --card-bg: #ffffff;
-    --text-main: #0f172a;
-    --accent: #ec4899;
-    --border: #e2e8f0;
+    --bg-deep: #05050a;
+    --bg-card: #0f101a;
+    --border-glow: rgba(168, 85, 247, 0.2);
+    --accent-purple: #a855f7;
+    --accent-pink: #ec4899;
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
-body { background: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+body { background: var(--bg-deep); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+/* تأثيرات الخلفية الخوارزمية المرعبة */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 50% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 60%);
+    z-index: -1;
+}
 
 header {
-    background: #ffffff;
-    border-bottom: 1px solid var(--border);
+    background: rgba(15, 16, 26, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     padding: 20px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
-.logo { font-size: 22px; font-weight: 900; color: var(--accent); }
+.logo { font-size: 24px; font-weight: 900; background: linear-gradient(135deg, #fff, var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 1px; }
+
+.nav-links { display: flex; gap: 15px; align-items: center; }
+.fb-btn {
+    background: #1877f2;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 15px rgba(24, 119, 242, 0.3);
+}
+.fb-btn:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(24, 119, 242, 0.6); }
 
 .hero {
-    background: linear-gradient(135deg, #fbcfe8, #f472b6);
-    color: #fff;
     text-align: center;
-    padding: 60px 20px;
-    margin-bottom: 40px;
+    padding: 80px 20px;
+    background: linear-gradient(180deg, rgba(15, 16, 26, 0.5) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    margin-bottom: 50px;
 }
-.hero h1 { font-size: 36px; font-weight: 900; margin-bottom: 10px; }
-.hero p { font-size: 16px; opacity: 0.9; }
+.hero h1 { font-size: 44px; font-weight: 900; margin-bottom: 15px; color: #fff; text-shadow: 0 0 30px rgba(168, 85, 247, 0.3); }
+.hero p { font-size: 16px; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
 
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; flex: 1; width: 100%; }
 
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
-    margin-bottom: 50px;
+    gap: 30px;
+    margin-bottom: 60px;
 }
 .product-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 16px;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transform: translateY(-8px) scale(1.01);
+    border-color: var(--accent-purple);
+    box-shadow: 0 20px 40px rgba(168, 85, 247, 0.15);
 }
 .product-img {
     width: 100%;
-    height: 200px;
+    height: 220px;
     object-fit: cover;
-    background: #f1f5f9;
+    background: #000;
 }
-.product-body { padding: 20px; display: flex; flex-direction: column; flex: 1; justify-content: space-between; }
-.product-title { font-size: 18px; font-weight: bold; margin-bottom: 8px; color: #1e293b; }
-.product-desc { font-size: 13px; color: #64748b; margin-bottom: 15px; line-height: 1.5; }
-.product-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 15px; }
-.price { font-size: 18px; font-weight: 900; color: var(--accent); }
+.product-body { padding: 22px; display: flex; flex-direction: column; flex: 1; justify-content: space-between; }
+.product-title { font-size: 19px; font-weight: bold; margin-bottom: 8px; color: #fff; }
+.product-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
+.product-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; }
+.price { font-size: 20px; font-weight: 900; background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .buy-btn {
-    background: var(--accent);
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
     color: #fff;
     border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
+    padding: 10px 18px;
+    border-radius: 10px;
     font-weight: bold;
     cursor: pointer;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
 }
-.buy-btn:hover { opacity: 0.9; }
+.buy-btn:hover { opacity: 0.9; box-shadow: 0 6px 20px rgba(236, 72, 153, 0.6); }
 
-.loading { text-align: center; font-size: 16px; color: #64748b; grid-column: span 3; padding: 50px; }
+.loading { text-align: center; font-size: 16px; color: var(--text-muted); grid-column: span 3; padding: 60px; }
 
 footer {
-    background: #1e293b;
-    color: #94a3b8;
+    background: #030307;
+    color: var(--text-muted);
     text-align: center;
-    padding: 20px;
+    padding: 25px;
     font-size: 13px;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
 }
 </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">🌸 متجر الوالدة الغالية</div>
+    <div class="logo">Maha Zone</div>
+    <div class="nav-links">
+        <a id="fbLink" href="#" target="_blank" class="fb-btn">🌐 تواصل معنا عبر فيسبوك</a>
+    </div>
 </header>
 
 <div class="hero">
-    <h1>أهلاً بكم في متجرنا المميز</h1>
-    <p>أرقى المنتجات المختارة بعناية فائقة لتلبي كافة احتياجاتكم</p>
+    <h1>Maha Zone Emporium</h1>
+    <p>اكتشف أرقى المنتجات الرقمية والعالمية المصممة بعناية فائقة لتلبي تطلعاتك المستقبلية</p>
 </div>
 
 <div class="container">
-    <h2 style="margin-bottom: 25px; font-size: 22px;">قائمة المنتجات المتاحة</h2>
+    <h2 style="margin-bottom: 30px; font-size: 24px; color: #fff;">المنتجات الحصرية</h2>
     <div id="productsContainer" class="products-grid">
-        <div class="loading">🔄 جاري تحميل المنتجات من السحابة...</div>
+        <div class="loading">🔄 جاري تهيئة العرض الخوارزمي وسحب المنتجات...</div>
     </div>
 </div>
 
 <footer>
-    جميع الحقوق محفوظة © 2026
+    Maha Zone © 2026 - جميع الحقوق محفوظة
 </footer>
 
 <script src="config.js"></script>
 <script>
+// تعيين رابط الفيسبوك تلقائياً من الإعدادات
+document.getElementById('fbLink').href = StoreConfig.facebookUrl;
+
 async function loadStoreProducts() {
     const container = document.getElementById('productsContainer');
     try {
@@ -126,7 +166,7 @@ async function loadStoreProducts() {
         const products = data.record.products || [];
 
         if (products.length === 0) {
-            container.innerHTML = `<div class="loading">لا توجد منتجات مضافة حالياً. يرجى إضافتها عبر لوحة الإدارة!</div>`;
+            container.innerHTML = `<div class="loading">لا توجد منتجات متاحة في النظام حالياً. يجدر بمدير النظام إضافتها عبر لوحة التحكم!</div>`;
             return;
         }
 
@@ -135,7 +175,7 @@ async function loadStoreProducts() {
             const card = document.createElement('div');
             card.className = 'product-card';
             card.innerHTML = `
-                <img src="${p.image}" alt="${p.title}" class="product-img" onerror="this.src='https://via.placeholder.com/300x200?text=صورة+المنتج'">
+                <img src="${p.image}" alt="${p.title}" class="product-img" onerror="this.src='https://via.placeholder.com/300x200?text=Maha+Zone+Item'">
                 <div class="product-body">
                     <div>
                         <div class="product-title">${p.title}</div>
@@ -143,14 +183,14 @@ async function loadStoreProducts() {
                     </div>
                     <div class="product-footer">
                         <span class="price">${p.price} ر.س</span>
-                        <button class="buy-btn" onclick="alert('تمت إضافة المنتج إلى سلة الشراء بنجاح!')">اطلب الآن</button>
+                        <button class="buy-btn" onclick="alert('تمت إضافة المنتج إلى سلة الشراء بنجاح!')">طلب فوري</button>
                     </div>
                 </div>
             `;
             container.appendChild(card);
         });
     } catch (err) {
-        container.innerHTML = `<div class="loading" style="color:#ef4444;">❌ حدث خطأ في الاتصال بالسيرفر.</div>`;
+        container.innerHTML = `<div class="loading" style="color:#ef4444;">❌ فشل الاتصال بالسيرفر الخارجي.</div>`;
     }
 }
 
