@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لوحة الإدارة الآمنة</title>
+<title>Maha Zone | Secure Admin Control</title>
 <style>
 :root {
-    --bg-dark: #0f172a;
-    --panel-bg: #1e293b;
-    --border: #334155;
-    --accent: #10b981;
-    --text: #f8fafc;
+    --bg-dark: #05050a;
+    --panel-bg: #0f101a;
+    --border: rgba(168, 85, 247, 0.2);
+    --accent: #a855f7;
+    --text: #f3f4f6;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
 body { background: var(--bg-dark); color: var(--text); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
@@ -18,103 +18,93 @@ body { background: var(--bg-dark); color: var(--text); min-height: 100vh; displa
 #loginModal {
     background: var(--panel-bg);
     border: 1px solid var(--border);
-    padding: 30px;
-    border-radius: 16px;
+    padding: 40px;
+    border-radius: 20px;
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
     text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.8), 0 0 30px rgba(168, 85, 247, 0.1);
 }
-#loginModal h2 { margin-bottom: 20px; font-size: 20px; color: #fff; }
+#loginModal h2 { margin-bottom: 10px; font-size: 22px; color: #fff; }
 .input-box {
     width: 100%;
-    background: #0f172a;
-    border: 1px solid var(--border);
+    background: #05050a;
+    border: 1px solid rgba(255,255,255,0.1);
     color: #fff;
-    padding: 12px 15px;
-    border-radius: 8px;
-    font-size: 14px;
-    margin-bottom: 15px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 15px;
+    margin-bottom: 20px;
     outline: none;
+    transition: border-color 0.2s;
 }
+.input-box:focus { border-color: var(--accent); }
+
 .btn {
     width: 100%;
-    background: var(--accent);
+    background: linear-gradient(135deg, var(--accent), #ec4899);
     color: #fff;
     border: none;
-    padding: 12px;
-    border-radius: 8px;
+    padding: 14px;
+    border-radius: 12px;
     font-weight: bold;
     cursor: pointer;
-    font-size: 14px;
-    transition: opacity 0.2s;
+    font-size: 15px;
+    box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+    transition: transform 0.2s, opacity 0.2s;
 }
-.btn:hover { opacity: 0.9; }
+.btn:hover { transform: translateY(-2px); opacity: 0.9; }
 
 #adminPanel {
     display: none;
     background: var(--panel-bg);
     border: 1px solid var(--border);
-    padding: 30px;
-    border-radius: 16px;
+    padding: 40px;
+    border-radius: 20px;
     width: 100%;
-    max-width: 600px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    max-width: 650px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.8), 0 0 30px rgba(168, 85, 247, 0.1);
 }
-#adminPanel h2 { margin-bottom: 20px; font-size: 22px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+#adminPanel h2 { margin-bottom: 25px; font-size: 24px; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; }
 
-.form-group { margin-bottom: 20px; text-align: right; }
-.form-group label { display: block; font-size: 13px; color: #94a3b8; margin-bottom: 8px; font-weight: bold; }
-textarea.input-box { resize: vertical; height: 100px; }
-
-.drop-zone {
-    border: 2px dashed var(--border);
-    background: #0f172a;
-    padding: 25px;
-    text-align: center;
-    border-radius: 8px;
-    cursor: pointer;
-    color: #94a3b8;
-    font-size: 13px;
-    transition: border-color 0.2s;
-}
-.drop-zone:hover { border-color: var(--accent); color: #fff; }
+.form-group { margin-bottom: 22px; text-align: right; }
+.form-group label { display: block; font-size: 13px; color: #9ca3af; margin-bottom: 8px; font-weight: bold; }
+textarea.input-box { resize: vertical; height: 120px; }
 </style>
 </head>
 <body>
 
 <div id="loginModal">
-    <h2>🔐 بوابة الإدارة السرية</h2>
-    <p style="color:#94a3b8; font-size:13px; margin-bottom:20px;">الرجاء إدخال كلمة المرور للوصول إلى لوحة التحكم</p>
+    <h2>🔐 بوابة التحكم المركزية</h2>
+    <p style="color:#9ca3af; font-size:13px; margin-bottom:25px;">أدخل مفتاح المصادقة السري للوصول إلى النظام</p>
     <input type="password" id="adminPassInput" class="input-box" placeholder="كلمة المرور...">
-    <button class="btn" onclick="attemptLogin()">دخول للوحة التحكم</button>
+    <button class="btn" onclick="attemptLogin()">فتح لوحة العمليات</button>
 </div>
 
 <div id="adminPanel">
-    <h2>⚡ إضافة منتج جديد للسحابة</h2>
+    <h2>⚡ مركز حقن المنتجات السحابية</h2>
     
     <div class="form-group">
-        <label>اسم المنتج وعنوانه:</label>
-        <input type="text" id="prodTitle" class="input-box" placeholder="مثال: حقيبة يد فاخرة...">
+        <label>اسم المنتج الإحترافي:</label>
+        <input type="text" id="prodTitle" class="input-box" placeholder="مثال: جهاز استشعار ذكي...">
     </div>
 
     <div class="form-group">
         <label>سعر المنتج (ر.س):</label>
-        <input type="number" id="prodPrice" class="input-box" placeholder="مثال: 150">
+        <input type="number" id="prodPrice" class="input-box" placeholder="مثال: 299">
     </div>
 
     <div class="form-group">
         <label>رابط صورة المنتج المباشر:</label>
         <input type="text" id="prodImage" class="input-box" placeholder="https://example.com/image.jpg">
-        <div class="drop-zone" style="margin-top: 10px;">أو اسحب وأفلت الصورة هنا ولصق رابطها بالأعلى</div>
     </div>
 
     <div class="form-group">
-        <label>تفاصيل ووصف المنتج:</label>
-        <textarea id="prodDesc" class="input-box" placeholder="اكتب تفاصيل ومواصفات المنتج هنا..."></textarea>
+        <label>الوصف والتفاصيل الخوارزمية:</label>
+        <textarea id="prodDesc" class="input-box" placeholder="اكتب المواصفات والخصائص بدقة..."></textarea>
     </div>
 
-    <button class="btn" onclick="addNewProduct()">🚀 نشر المنتج فوراً في المتجر</button>
+    <button class="btn" onclick="addNewProduct()">🚀 إرسال ونشر المنتج فوراً للسحابة</button>
 </div>
 
 <script src="config.js"></script>
@@ -125,7 +115,7 @@ function attemptLogin() {
         document.getElementById('loginModal').style.display = 'none';
         document.getElementById('adminPanel').style.display = 'block';
     } else {
-        alert('❌ كلمة المرور غير صحيحة!');
+        alert('❌ مفتاح المرور غير صحيح!');
     }
 }
 
@@ -136,7 +126,7 @@ async function addNewProduct() {
     const description = document.getElementById('prodDesc').value.trim();
 
     if (!title || !price || !image) {
-        alert('⚠️ الرجاء تعبئة الحقول الأساسية (الاسم، السعر، ورابط الصورة)!');
+        alert('⚠️ الرجاء إدخال الحقول الإلزامية (الاسم، السعر، ورابط الصورة)!');
         return;
     }
 
@@ -166,18 +156,18 @@ async function addNewProduct() {
         });
 
         if (updateRes.ok) {
-            alert('🎉 تم نشر المنتج بنجاح وأصبح ظاهراً في المتجر الرئيسي للعملاء!');
+            alert('🎉 تم حقن ونشر المنتج في السحابة بنجاح!');
             document.getElementById('prodTitle').value = '';
             document.getElementById('prodPrice').value = '';
             document.getElementById('prodImage').value = '';
             document.getElementById('prodDesc').value = '';
         } else {
-            alert('❌ فشل حفظ المنتج في السحابة.');
+            alert('❌ فشل حفظ البيانات في السيرفر الخارجي.');
         }
 
     } catch (err) {
         console.error(err);
-        alert('❌ حدث خطأ أثناء الاتصال بالسيرفر.');
+        alert('❌ حدث خطأ تقني أثناء الاتصال بالسحابة.');
     }
 }
 </script>
