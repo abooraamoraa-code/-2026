@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة الإدارة الآمنة</title>
+<style>
+:root {
+    --bg-dark: #0f172a;
+    --panel-bg: #1e293b;
+    --border: #334155;
+    --accent: #10b981;
+    --text: #f8fafc;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+body { background: var(--bg-dark); color: var(--text); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+
+/* شاشة تسجيل الدخول */
+#loginModal {
+    background: var(--panel-bg);
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+#loginModal h2 { margin-bottom: 20px; font-size: 20px; color: #fff; }
+.input-box {
+    width: 100%;
+    background: #0f172a;
+    border: 1px solid var(--border);
+    color: #fff;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    outline: none;
+}
+.btn {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    transition: opacity 0.2s;
+}
+.btn:hover { opacity: 0.9; }
+
+/* لوحة التحكم الفعلية (مخفية حتى يتم تسجيل الدخول) */
+#adminPanel {
+    display: none;
+    background: var(--panel-bg);
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+#adminPanel h2 { margin-bottom: 20px; font-size: 22px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+
+.form-group { margin-bottom: 20px; text-align: right; }
+.form-group label { display: block; font-size: 13px; color: #94a3b8; margin-bottom: 8px; font-weight: bold; }
+textarea.input-box { resize: vertical; height: 100px; }
+
+/* مربع سحب ورفع الصورة */
+.drop-zone {
+    border: 2px dashed var(--border);
+    background: #0f172a;
+    padding: 25px;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #94a3b8;
+    font-size: 13px;
+    transition: border-color 0.2s;
+}
+.drop-zone:hover { border-color: var(--accent); color: #fff; }
+</style>
+</head>
+<body>
+
+<!-- صندوق تسجيل الدخول الآمن -->
+<div id="loginModal">
+    <h2>🔐 بوابة الإدارة السرية</h2>
+    <p style="color:#94a3b8; font-size:13px; margin-bottom:20px;">الرجاء إدخال كلمة المرور للوصول إلى لوحة التحكم</p>
+    <input type="password" id="adminPassInput" class="input-box" placeholder="كلمة المرور...">
+    <button class="btn" onclick="attemptLogin()">دخول للوحة التحكم</button>
+</div>
+
+<!-- لوحة التحكم المنعزلة -->
+<div id="adminPanel">
+    <h2>⚡ إضافة منتج جديد للسحابة</h2>
+    
+    <div class="form-group">
+        <label>اسم المنتج وعنوانه:</label>
+        <input type="text" id="prodTitle" class="input-box" placeholder="مثال: حقيبة يد فاخرة...">
+    </div>
+
+    <div class="form-group">
+        <label>سعر المنتج (ر.س):</label>
+        <input type="number" id="prodPrice" class="input-box" placeholder="مثال: 150">
+    </div>
+
+    <div class="form-group">
+        <label>رابط الصورة أو سحبها (ضع رابط الصورة المباشر هنا):</label>
+        <input type="text" id="prodImage" class="input-box" placeholder="https://example.com/image.jpg">
+        <div class="drop-zone" style="margin-top: 10px;">أو اسحب وأفلت الصورة هنا (يمكنك لصق رابطها المباشر بالأعلى)</div>
+    </div>
+
+    <div class="form-group">
+        <label>تفاصيل ووصف المنتج:</label>
+        <textarea id="prodDesc" class="input-box" placeholder="اكتب تفاصيل ومواصفات المنتج هنا..."></textarea>
+    </div>
+
+    <button class="btn" onclick="addNewProduct()">🚀 نشر المنتج فوراً في المتجر</button>
+</div>
+
+<script src="config.js"></script>
+<script>
+// التحقق من كلمة المرور المشفرة
+async function attemptLogin() {
+    const pass = document.getElementById('adminPassInput').value;
+    const isValid = await verifyAdminPassword(pass);
+    
+    if (isValid) {
+        document.getElementById('loginModal').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+    } else {
+        alert('❌ كلمة المرور غير صحيحة!');
+    }
+}
+
+// دالة إضافة المنتج ورفعه للسيرفر الخارجي
+async function addNewProduct() {
+    const title = document.getElementById('prodTitle').value.trim();
+    const price = document.getElementById('prodPrice').value.trim();
+    const image = document.getElementById('prodImage').value.trim();
+    const description = document.getElementById('prodDesc').value.trim();
+
+    if (!title || !price || !image) {
+        alert('⚠️ الرجاء تعبئة الحقول الأساسية (الاسم، السعر، ورابط الصورة)!');
+        return;
+    }
+
+    try {
+        // 1. جلب المنتجات الحالية من السحابة
+        let response = await fetch(`${StoreConfig.baseUrl}/${StoreConfig.binId}/latest`, {
+            headers: { 'X-Master-Key': StoreConfig.apiKey }
+        });
+        let data = await response.json();
+        let products = data.record.products || [];
+
+        // 2. إضافي المنتج الجديد في المقدمة
+        products.unshift({
+            id: Date.now(),
+            title: title,
+            price: price,
+            image: image,
+            description: description,
+            date: new Date().toISOString()
+        });
+
+        // 3. تحديث السيرفر الخارجي فوراً
+        let updateRes = await fetch(`${StoreConfig.baseUrl}/${StoreConfig.binId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Master-Key': StoreConfig.apiKey
+            },
+            body: JSON.stringify({ products: products })
+        });
+
+        if (updateRes.ok) {
+            alert('🎉 تم نشر المنتج بنجاح وأصبح ظاهراً في المتجر الرئيسي للعملاء!');
+            document.getElementById('prodTitle').value = '';
+            document.getElementById('prodPrice').value = '';
+            document.getElementById('prodImage').value = '';
+            document.getElementById('prodDesc').value = '';
+        } else {
+            alert('❌ فشل حفظ المنتج في السحابة.');
+        }
+
+    } catch (err) {
+        console.error(err);
+        alert('❌ حدث خطأ أثناء الاتصال بالسيرفر.');
+    }
+}
+</script>
+</body>
+</html>
