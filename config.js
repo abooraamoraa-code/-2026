@@ -6,6 +6,6 @@ const StoreConfig = {
     binId: "6aaa882affd5d160530df70d",
     baseUrl: "https://api.jsonbin.io/v3/b",
     
-    // كلمة المرور الخاصة بك (يمكنك تغييرها هنا متى شئت)
+    // كلمة المرور للوحة التحكم
     adminPassword: "mom2026" 
 };
