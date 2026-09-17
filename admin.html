@@ -15,7 +15,6 @@
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
 body { background: var(--bg-dark); color: var(--text); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
 
-/* شاشة تسجيل الدخول */
 #loginModal {
     background: var(--panel-bg);
     border: 1px solid var(--border);
@@ -52,7 +51,6 @@ body { background: var(--bg-dark); color: var(--text); min-height: 100vh; displa
 }
 .btn:hover { opacity: 0.9; }
 
-/* لوحة التحكم الفعلية (مخفية حتى يتم تسجيل الدخول) */
 #adminPanel {
     display: none;
     background: var(--panel-bg);
@@ -69,7 +67,6 @@ body { background: var(--bg-dark); color: var(--text); min-height: 100vh; displa
 .form-group label { display: block; font-size: 13px; color: #94a3b8; margin-bottom: 8px; font-weight: bold; }
 textarea.input-box { resize: vertical; height: 100px; }
 
-/* مربع سحب ورفع الصورة */
 .drop-zone {
     border: 2px dashed var(--border);
     background: #0f172a;
@@ -86,7 +83,6 @@ textarea.input-box { resize: vertical; height: 100px; }
 </head>
 <body>
 
-<!-- صندوق تسجيل الدخول الآمن -->
 <div id="loginModal">
     <h2>🔐 بوابة الإدارة السرية</h2>
     <p style="color:#94a3b8; font-size:13px; margin-bottom:20px;">الرجاء إدخال كلمة المرور للوصول إلى لوحة التحكم</p>
@@ -94,7 +90,6 @@ textarea.input-box { resize: vertical; height: 100px; }
     <button class="btn" onclick="attemptLogin()">دخول للوحة التحكم</button>
 </div>
 
-<!-- لوحة التحكم المنعزلة -->
 <div id="adminPanel">
     <h2>⚡ إضافة منتج جديد للسحابة</h2>
     
@@ -109,9 +104,9 @@ textarea.input-box { resize: vertical; height: 100px; }
     </div>
 
     <div class="form-group">
-        <label>رابط الصورة أو سحبها (ضع رابط الصورة المباشر هنا):</label>
+        <label>رابط صورة المنتج المباشر:</label>
         <input type="text" id="prodImage" class="input-box" placeholder="https://example.com/image.jpg">
-        <div class="drop-zone" style="margin-top: 10px;">أو اسحب وأفلت الصورة هنا (يمكنك لصق رابطها المباشر بالأعلى)</div>
+        <div class="drop-zone" style="margin-top: 10px;">أو اسحب وأفلت الصورة هنا ولصق رابطها بالأعلى</div>
     </div>
 
     <div class="form-group">
@@ -124,12 +119,9 @@ textarea.input-box { resize: vertical; height: 100px; }
 
 <script src="config.js"></script>
 <script>
-// التحقق من كلمة المرور المشفرة
-async function attemptLogin() {
+function attemptLogin() {
     const pass = document.getElementById('adminPassInput').value;
-    const isValid = await verifyAdminPassword(pass);
-    
-    if (isValid) {
+    if (pass === StoreConfig.adminPassword) {
         document.getElementById('loginModal').style.display = 'none';
         document.getElementById('adminPanel').style.display = 'block';
     } else {
@@ -137,7 +129,6 @@ async function attemptLogin() {
     }
 }
 
-// دالة إضافة المنتج ورفعه للسيرفر الخارجي
 async function addNewProduct() {
     const title = document.getElementById('prodTitle').value.trim();
     const price = document.getElementById('prodPrice').value.trim();
@@ -150,14 +141,12 @@ async function addNewProduct() {
     }
 
     try {
-        // 1. جلب المنتجات الحالية من السحابة
         let response = await fetch(`${StoreConfig.baseUrl}/${StoreConfig.binId}/latest`, {
             headers: { 'X-Master-Key': StoreConfig.apiKey }
         });
         let data = await response.json();
         let products = data.record.products || [];
 
-        // 2. إضافي المنتج الجديد في المقدمة
         products.unshift({
             id: Date.now(),
             title: title,
@@ -167,7 +156,6 @@ async function addNewProduct() {
             date: new Date().toISOString()
         });
 
-        // 3. تحديث السيرفر الخارجي فوراً
         let updateRes = await fetch(`${StoreConfig.baseUrl}/${StoreConfig.binId}`, {
             method: 'PUT',
             headers: {
